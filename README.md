@@ -6,6 +6,6 @@ this project is intended to run with my [clr loader](https://github.com/notunixi
 ### credits
 * [LargestBoi](https://github.com/LargestBoi) - originally got me started on this
 * [ShrekamusChrist](https://github.com/Dean2k) - helped me understand ares api and where to start off with
-* [BlazeBest](https://github.com/BlazeBest) - some IL2CPP classes
+* [BlazeBest](https://github.com/BlazeBest) - IL2CPP classes
 
 
