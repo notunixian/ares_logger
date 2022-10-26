@@ -4,8 +4,8 @@ a "new" version of the [ares logger](https://github.com/Dean2k/ARESLogger) that 
 this project is intended to run with my [clr loader](https://github.com/notunixian/clr-loader), and a built version of the clr loader will be included in the releases.
 
 ### credits
-* [LargestBoi](https://github.com/LargestBoi) - originally got me started on this
-* [ShrekamusChrist](https://github.com/Dean2k) - helped me understand ares api and where to start off with
+* [LargestBoi](https://github.com/LargestBoi) - originally got me started on this and created the original logger
+* [ShrekamusChrist](https://github.com/Dean2k) - helped me understand ares api and created the original logger
 * [BlazeBest](https://github.com/BlazeBest) - majority of SDK classes
 
 
