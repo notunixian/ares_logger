@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{986164B1-A473-496D-B5AA-4BB274E5634D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ares_logger</RootNamespace>
+    <AssemblyName>ares_logger</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="main\funcs\logging.cs" />
+    <Compile Include="main\handler\main_domain.cs" />
+    <Compile Include="main\handler\domain_handler.cs" />
+    <Compile Include="main\core.cs" />
+    <Compile Include="main\patches\network_mgr.cs" />
+    <Compile Include="main\patches\on_event.cs" />
+    <Compile Include="main\sdk\Assembly-CSharp\NetworkManager.cs" />
+    <Compile Include="main\sdk\Assembly-CSharp\VRCNetworkBehaviour.cs" />
+    <Compile Include="main\sdk\Assembly-CSharp\VRCPlayer.cs" />
+    <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\ApiAvatar.cs" />
+    <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\ApiModel.cs" />
+    <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\VRCNetworkingClient.cs" />
+    <Compile Include="main\sdk\Assembly-CSharp\VRC\Player.cs" />
+    <Compile Include="main\sdk\IL2CPP\CastUtils.cs" />
+    <Compile Include="main\sdk\IL2CPP\CPP2IL.cs" />
+    <Compile Include="main\sdk\IL2CPP\IL2CPP.cs" />
+    <Compile Include="main\sdk\IL2CPP\Import.cs" />
+    <Compile Include="main\sdk\IL2CPP\Objects\IL2Assembly.cs" />
+    <Compile Include="main\sdk\IL2CPP\Objects\IL2Class.cs" />
+    <Compile Include="main\sdk\IL2CPP\Objects\IL2ClassType.cs" />
+    <Compile Include="main\sdk\IL2CPP\Objects\IL2Field.cs" />
+    <Compile Include="main\sdk\IL2CPP\Objects\IL2Method.cs" />
+    <Compile Include="main\sdk\IL2CPP\Objects\IL2Object.cs" />
+    <Compile Include="main\sdk\IL2CPP\Objects\IL2Param.cs" />
+    <Compile Include="main\sdk\IL2CPP\Objects\IL2Property.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Action.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Array.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Boolean.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Byte.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Collections\Generic\Dictionary.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Collections\Generic\List.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Collections\Hashtable.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Delegate.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Int32.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\IO\File.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\IO\MemoryStream.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\IO\Stream.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Object.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Reflection\Assembly.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Reflection\MemberInfo.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Reflection\MethodBase.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Reflection\MethodBody.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Reflection\MethodInfo.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Reflection\Module.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Reflection\MonoMethod.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Reflection\ParameterInfo.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Reflection\RuntimeMethodInfo.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\RuntimeMethodHandle.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\RuntimeType.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Runtime\Serialization\Formatters\Binary\BinaryFormatter.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\String.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Text\Encoding.cs" />
+    <Compile Include="main\sdk\IL2CPP\System\Type.cs" />
+    <Compile Include="main\sdk\patch.cs" />
+    <Compile Include="main\sdk\Photon\EventData.cs" />
+    <Compile Include="main\sdk\Photon\LoadBalancingClient.cs" />
+    <Compile Include="main\sdk\UnhollowerBaseLib\Runtime\Il2CppStructs.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Application.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\AsyncOperation.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Behaviour.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Camera.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Color.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Color32.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Component.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Coroutine.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\DrivenTransformProperties.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Events\UnityAction.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Events\UnityEvent.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Events\UnityEventBase.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Experimental\Rendering\GraphicsFormat.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\GameObject.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Graphics.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\HideFlags.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Input.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\KeyCode.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\LayerMask.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\LightShadows.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\LightType.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\LineRenderer.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Material.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Mathf.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\MeshFilter.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\MeshRenderer.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\MonoBehaviour.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Object.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\PrimitiveType.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Quaternion.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Ray.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Rect.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\RectTransform.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Renderer.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\RenderTexture.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\RenderTextureFormat.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\RenderTextureReadWrite.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Resources.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\SceneManagement\LoadSceneMode.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\SceneManagement\LoadSceneParameters.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\SceneManagement\LocalPhysicsMode.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\SceneManagement\Scene.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\SceneManagement\SceneManager.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\SceneManagement\SceneManagerAPIInternal.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\SceneManagement\SceneUtility.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\SceneManagement\UnloadSceneOptions.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Screen.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\ScriptableObject.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\SendMessageOptions.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Shader.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Sprite.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\SpriteMeshType.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\SpriteRenderer.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Texture.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Texture2D.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\TextureFormat.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Time.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Transform.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\UnityString.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Vector2.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Vector3.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Vector3Ex.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\Vector4.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\WaitForSeconds.cs" />
+    <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\YieldInstruction.cs" />
+    <Compile Include="main\util\avatar.cs" />
+    <Compile Include="main\util\hook.cs" />
+    <Compile Include="main\util\json.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
