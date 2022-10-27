@@ -36,7 +36,7 @@ namespace ares_logger.main.patches
             try
             {
                 IL2Method method = NetworkManager.Instance_Class.GetMethod("OnPlayerLeft");
-                player_join = new patch(method, (_)on_left);
+                player_left = new patch(method, (_)on_left);
                 __OnPlayerLeft = player_join.create_delegate<_>();
                 Console.WriteLine("[patches] networkmgr (onplayerleft) success");
             }
@@ -49,7 +49,6 @@ namespace ares_logger.main.patches
             var player = new Assembly_CSharp.VRC.Player(_player);
 
             if (player.vrc_player.actor_id == VRCPlayer.Instance.actor_id) patches.on_event.log_avatar();
-            Console.WriteLine($"adding player to list, actor id: {player.vrc_player.actor_id}");
             player_list.Add(player.vrc_player.actor_id, player);
             actor_list.Add(player, player.vrc_player.actor_id);
 
@@ -63,7 +62,6 @@ namespace ares_logger.main.patches
 
             // some shit code to fix vrcplayer being destroyed before i can access it
             actor_list.TryGetValue(player, out int actor);
-            Console.WriteLine($"removing player with actor {actor}");
             player_list.Remove(actor);
             actor_list.Remove(player);
 
