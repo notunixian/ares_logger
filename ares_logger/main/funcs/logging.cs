@@ -36,7 +36,6 @@ namespace ares_logger.main.funcs
                 PinCode = "None"
             };
 
-
             HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.ares-mod.com/records/Avatars");
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
@@ -61,6 +60,10 @@ namespace ares_logger.main.funcs
                 if (ex.Message.Contains("(409) Conflict"))
                 {
                     Console.WriteLine($"[log] {apiAvatar.name} already exists on api.");
+                }
+                else
+                {
+                    Console.WriteLine($"[log failure] unknown exception, e: {ex.Message}");
                 }
             }
         }
