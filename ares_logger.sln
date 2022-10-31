@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ares_logger", "ares_logger.csproj", "{986164B1-A473-496D-B5AA-4BB274E5634D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ares_logger", "ares_logger\ares_logger.csproj", "{986164B1-A473-496D-B5AA-4BB274E5634D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "clr_loader", "..\clr_loader\clr_loader.vcxproj", "{CC14121F-F8CD-4D34-8DF7-1A46B72FC840}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "clr_loader", "clr_loader\clr_loader.vcxproj", "{CC14121F-F8CD-4D34-8DF7-1A46B72FC840}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "face_injector_v2", "..\face_injector_v2\face_injector_v2.vcxproj", "{A0EDD2AC-09C4-46E4-88D7-9B369952317C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "face_injector_v2", "face_injector_v2\face_injector_v2.vcxproj", "{A0EDD2AC-09C4-46E4-88D7-9B369952317C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

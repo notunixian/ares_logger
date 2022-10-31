@@ -10,7 +10,6 @@
 
 int main()
 {
-	// driver init
 	start_driver();
 	cout << endl;
 
@@ -47,15 +46,16 @@ int main()
 		{
 			cout << std::endl << std::endl << "failed to find vrchat directory, please enter your vrchat directory." << std::endl;
 
-			enter: {
 			vrc_path = "";
-			cin >> vrc_path;
-			}
+			getline(std::cin, vrc_path);
+
+			const std::filesystem::path path = std::filesystem::u8path(vrc_path);
 				
-			if (std::filesystem::is_directory(vrc_path) == false)
+			if (std::filesystem::is_directory(path) == false)
 			{
 				cout << "not a valid directory." << std::endl;
-				goto enter;
+				system("pause");
+				return 0;
 			}
 
 			ofstream write_file;
@@ -67,7 +67,7 @@ int main()
 		text = vrc_path;
 	}
 
-	std::cout << "downloading files..." << std::endl;
+	std::cout << std::endl << "downloading files..." << std::endl;
 
 	auto log_res = URLDownloadToFile(0, "https://ares-mod.com/logger/ares_logger.dll", (text + "\\ares_logger.dll").c_str(), 0, NULL);
 	if (log_res != S_OK) std::cout << "failed to download logger" << std::endl;

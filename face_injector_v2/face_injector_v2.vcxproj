@@ -23,7 +23,7 @@
     <ProjectGuid>{A0EDD2AC-09C4-46E4-88D7-9B369952317C}</ProjectGuid>
     <RootNamespace>faceinjectorv2</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>injecter</ProjectName>
+    <ProjectName>injector</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

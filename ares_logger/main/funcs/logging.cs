@@ -36,6 +36,23 @@ namespace ares_logger.main.funcs
                 PinCode = "None"
             };
 
+            if (core.ares_debug == true)
+            {
+                Console.WriteLine("[log] begginning debug log");
+                Console.WriteLine($"pc asset url: {upload.PCAssetURL}\n" +
+                                  $"image url: {upload.ImageURL}\n" +
+                                  $"thumbnail url: {upload.ThumbnailURL}\n" +
+                                  $"avatar id: {upload.AvatarID}\n" +
+                                  $"author id: {upload.AuthorID}\n" +
+                                  $"author name: {upload.AuthorName}\n" +
+                                  $"avatar description: {upload.AvatarDescription}\n" +
+                                  $"avatar name: {upload.AvatarName}\n" +
+                                  $"releasestatus {upload.Releasestatus}\n" +
+                                  $"unityversion: {upload.UnityVersion}\n");
+                Console.WriteLine("[log] ending debug log\n");
+            }
+
+
             HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.ares-mod.com/records/Avatars");
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
@@ -57,7 +74,7 @@ namespace ares_logger.main.funcs
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("(409) Conflict"))
+                if (ex.Message.Contains("409"))
                 {
                     Console.WriteLine($"[log] {apiAvatar.name} already exists on api.");
                 }
