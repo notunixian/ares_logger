@@ -17,13 +17,13 @@ namespace Assembly_CSharp
             {
                 methodsPlayer[0].Name = "OnPlayerJoined";
             }
-            catch { Console.WriteLine("[network_mgr] unable to find OnPlayerJoined"); }
+            catch { }
 
             try
             {
                 methodsPlayer[2].Name = "OnPlayerLeft";
             }
-            catch { Console.WriteLine("[network_mgr] unable to find OnPlayerLeft"); }
+            catch { }
         }
         public NetworkManager(IntPtr ptr) : base(ptr) { }
 

@@ -1,4 +1,5 @@
-﻿using Assembly_CSharp.VRC.Core;
+﻿using ares_logger.main.util;
+using Assembly_CSharp.VRC.Core;
 using IL2CPP_Core.Objects;
 using System;
 

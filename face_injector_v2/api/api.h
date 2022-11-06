@@ -153,14 +153,17 @@ wstring get_files_path()
 	return (wstring(system_dir) + patch_shell);
 }
 
-void mmap_driver()
+void mmap_driver(int prv)
 {
 	wstring sz_driver = get_random_file_name_directory(xor_w(L".sys"));
 	wstring sz_mapper = get_random_file_name_directory(xor_w(L".exe"));
 	wstring sz_db = get_files_directory() + L"drv64.dll";
 	
 	// provider 22 is gputweak 2 driver, seems to act weirdly sometimes but seems to work fine most of the time.
-	wstring sz_params_map = xor_w(L"-prv 22 -map ") + sz_driver;
+	// provider 19 is used as fallback.
+	std::wstringstream ss;
+	ss << "-prv " << prv << " -map " << sz_driver;
+	wstring sz_params_map = ss.str();
 
 	DeleteFileW(sz_driver.c_str());
 	DeleteFileW(sz_mapper.c_str());

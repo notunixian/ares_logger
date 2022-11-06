@@ -1,4 +1,5 @@
-﻿using ares_logger.sdk;
+﻿using ares_logger.main.util;
+using ares_logger.sdk;
 using Assembly_CSharp;
 using IL2CPP_Core.Objects;
 using System;
@@ -23,24 +24,23 @@ namespace ares_logger.main.patches
 
         public static void init_patch()
         {
-            Console.WriteLine("[patches] networkmgr patch start");
             try
             {
                 IL2Method method = NetworkManager.Instance_Class.GetMethod("OnPlayerJoined");
                 player_join = new patch(method, (_)on_join);
                 __OnPlayerJoined = player_join.create_delegate<_>();
-                Console.WriteLine("[patches] networkmgr (onplayerjoin) success");
             }
-            catch (Exception e) { Console.WriteLine($"[patches] networkmgr (onplayerjoin) patch exception | e: {e.Message}"); }
+            catch (Exception e) { log_sys.log($"[patch fail]: networkmgr (onplayerjoin) patch exception | e: {e.Message}", ConsoleColor.Red); }
 
             try
             {
                 IL2Method method = NetworkManager.Instance_Class.GetMethod("OnPlayerLeft");
                 player_left = new patch(method, (_)on_left);
                 __OnPlayerLeft = player_join.create_delegate<_>();
-                Console.WriteLine("[patches] networkmgr (onplayerleft) success");
             }
-            catch (Exception e) { Console.WriteLine($"[patches] networkmgr (onplayerleft) patch exception | e: {e.Message}"); }
+            catch (Exception e) { log_sys.log($"[patch fail]: networkmgr (onplayerleft) patch exception | e: {e.Message}", ConsoleColor.Red); }
+
+
         }
 
         private static void on_join(IntPtr _instance, IntPtr _player)
@@ -48,9 +48,17 @@ namespace ares_logger.main.patches
             if (_player == IntPtr.Zero) return;
             var player = new Assembly_CSharp.VRC.Player(_player);
 
-            if (player.vrc_player.actor_id == VRCPlayer.Instance.actor_id) patches.on_event.log_avatar();
-            player_list.Add(player.vrc_player.actor_id, player);
-            actor_list.Add(player, player.vrc_player.actor_id);
+            try
+            {
+                if (player.vrc_player.actor_id == VRCPlayer.Instance.actor_id) patches.on_event.log_avatar();
+                player_list.Add(player.vrc_player.actor_id, player);
+                actor_list.Add(player, player.vrc_player.actor_id);
+            }
+            catch (Exception e)
+            {
+                log_sys.log($"[on_join]: failed at on_join code, e: {e.Message}");
+            }
+            
 
             __OnPlayerJoined(_instance, _player);
         }
@@ -61,12 +69,22 @@ namespace ares_logger.main.patches
             var player = new Assembly_CSharp.VRC.Player(_player);
 
             // some shit code to fix vrcplayer being destroyed before i can access it
-            actor_list.TryGetValue(player, out int actor);
-            player_list.Remove(actor);
-            actor_list.Remove(player);
+            try
+            {
+                var list = actor_list.TryGetValue(player, out int actor);
+                if (list == true)
+                {
+                    player_list.Remove(actor);
+                    actor_list.Remove(player);
+                }
+            }
+            catch (Exception e)
+            {
+                log_sys.log($"[on_join]: failed at on_left code, e: {e.Message}");
+            }
+
 
             __OnPlayerLeft(_instance, _player);
-
         }
 
     }

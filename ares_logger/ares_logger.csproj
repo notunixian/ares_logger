@@ -171,6 +171,7 @@
     <Compile Include="main\util\avatar.cs" />
     <Compile Include="main\util\hook.cs" />
     <Compile Include="main\util\json.cs" />
+    <Compile Include="main\util\log_sys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

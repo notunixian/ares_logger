@@ -1,4 +1,5 @@
 ﻿using ares_logger.main.funcs;
+using ares_logger.main.util;
 using Assembly_CSharp;
 using Assembly_CSharp.VRC.Core;
 using IL2CPP_Core.Objects;
@@ -19,51 +20,51 @@ namespace ares_logger.main.patches
 
         public static void init_patch()
         {
-            Console.WriteLine("[patches] onevent patch start");
             try
             {
                 IL2Method method = VRCNetworkingClient.Instance_Class.GetMethod("OnEvent");
+                if (method == null)
+                    throw new NullReferenceException();
+
                 patch = new sdk.patch(method, (_onevent)event_patch);
                 __onevent = patch.create_delegate<_onevent>();
-                Console.WriteLine("[patches] onevent patch success");
             }
             catch (Exception e)
             {
-                Console.WriteLine($"[patches] onevent patch exception | e: {e.Message}");
+                log_sys.log($"[patch fail]: onevent patch exception | e: {e.Message}", ConsoleColor.Red);
             }
-            
+
         }
 
         private static void event_patch(IntPtr instance, IntPtr data)
         {
-            if (data == IntPtr.Zero) return;
-            __onevent(instance, data);
-
             var event_data = new EventData(data);
             switch (event_data.Code)
             {
-                // event 223 would of been here, but in my testing both of these get sent no matter what.
                 case 42:
                     log_avatar(event_data.Sender);
                     break;
                 default:
                     break;
             }
+
+            __onevent(instance, data);
         }
 
         private static void log_avatar(int actor_id)
         {
             try
             {
+
                 var list = network_mgr.player_list.TryGetValue(actor_id, out var player);
                 if (list == true)
                 {
                     funcs.logging.execute_log(player.vrc_player, true);
                 }
             }
-            catch
+            catch (Exception e)
             {
-                Console.WriteLine("[log failure] unable to call log");
+                log_sys.log($"[log failure]: unknown exception: {e.Message}");
             }
         }
 
@@ -77,9 +78,9 @@ namespace ares_logger.main.patches
                     funcs.logging.execute_log(player, true);
                 }
             }
-            catch
+            catch (Exception e)
             {
-                Console.WriteLine("[log failure] unable to foreach");
+                log_sys.log($"[log failure]: unknown exception: {e.Message}");
             }
         }
     }

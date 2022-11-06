@@ -77,7 +77,6 @@ uintptr_t call_remote_load_library(DWORD thread_id, LPCSTR dll_name)
 	driver().free_memory_ex(alloc_shell_code);
 	VirtualFree(alloc_local, 0, MEM_RELEASE);
 	/////////////////////////////////
-
 	return mod_base;
 }
 /////////////////////////////////
@@ -147,6 +146,7 @@ uintptr_t resolve_func_addr(LPCSTR modname, LPCSTR modfunc)
 
 BOOL relocate_image(PVOID p_remote_img, PVOID p_local_img, PIMAGE_NT_HEADERS nt_head)
 {
+	
 	struct reloc_entry
 	{
 		ULONG to_rva;
@@ -204,7 +204,10 @@ BOOL resolve_import(DWORD thread_id, PVOID p_local_img, PIMAGE_NT_HEADERS nt_hea
 		base_image = call_remote_load_library(thread_id, module_name);
 
 		if (!base_image)
+		{
+			std::cout << "remote_load_library failed with module " << module_name << ", returning." << std::endl;
 			return false;
+		}
 
 		PIMAGE_THUNK_DATA ih_data = (PIMAGE_THUNK_DATA)rva_va(import_desc->FirstThunk, nt_head, p_local_img);
 		while (ih_data->u1.AddressOfData)

@@ -58,15 +58,24 @@ int main()
     ICLRRuntimeInfo* runtime_info = NULL;
     ICLRRuntimeHost* runtime_host = NULL;
 
-    if (!AllocConsole())
-    {
-        MessageBoxA(NULL, "failed to init console", "failure", MB_OK);
-        return 1;
-    }
+    if (!GetConsoleWindow())
+        if (!AllocConsole())
+            MessageBoxA(NULL, "failed to init console", "failure", MB_OK);
+
+    AttachConsole(ATTACH_PARENT_PROCESS);
+
     FILE* fDummy;
     freopen_s(&fDummy, "CONIN$", "r", stdin);
     freopen_s(&fDummy, "CONOUT$", "w", stderr);
     freopen_s(&fDummy, "CONOUT$", "w", stdout);
+
+    // credits: vrtool/miinc
+    const auto h_stdout = CreateFileW(L"CONOUT$", GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+    const auto h_stdin = CreateFileW(L"CONIN$", GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+
+    SetStdHandle(STD_OUTPUT_HANDLE, h_stdout);
+    SetStdHandle(STD_ERROR_HANDLE, h_stdout);
+    SetStdHandle(STD_INPUT_HANDLE, h_stdin);
 
     CLRCreateInstance(CLSID_CLRMetaHost, IID_ICLRMetaHost, ((LPVOID*)&meta_host));
     meta_host->GetRuntime(L"v4.0.30319", IID_ICLRRuntimeInfo, (LPVOID*)&runtime_info);

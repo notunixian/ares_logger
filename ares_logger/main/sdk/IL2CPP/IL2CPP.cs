@@ -4,12 +4,12 @@ using System.IO;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using IL2CPP_Core.Objects;
+using ares_logger.main.util;
 
 public static class IL2CPP
 {
     static IL2CPP()
     {
-        Console.WriteLine("[init] il2cpp init start");
         domain = Import.Domain.il2cpp_domain_get();
 
         uint count = 0;
@@ -29,7 +29,7 @@ public static class IL2CPP
                 AssemblyList.Add(AssemblyName, assembly);
             }
         }
-        Console.WriteLine("[init] il2cpp init complete");
+        log_sys.log("[init]: il2cpp init complete", ConsoleColor.Green);
     }
 
     public static T ResolveICall<T>(string signature) where T : Delegate

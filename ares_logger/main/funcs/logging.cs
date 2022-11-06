@@ -16,6 +16,9 @@ namespace ares_logger.main.funcs
     {
         public static void execute_log(VRCPlayer player, bool aviChange = false)
         {
+            if (player.Pointer == IntPtr.Zero) return;
+            if (player.AvatarModel.Pointer == IntPtr.Zero) return;
+
             var apiAvatar = player.AvatarModel;
             var upload = new avatar
             {
@@ -38,18 +41,16 @@ namespace ares_logger.main.funcs
 
             if (core.ares_debug == true)
             {
-                Console.WriteLine("[log] begginning debug log");
-                Console.WriteLine($"pc asset url: {upload.PCAssetURL}\n" +
-                                  $"image url: {upload.ImageURL}\n" +
-                                  $"thumbnail url: {upload.ThumbnailURL}\n" +
-                                  $"avatar id: {upload.AvatarID}\n" +
-                                  $"author id: {upload.AuthorID}\n" +
-                                  $"author name: {upload.AuthorName}\n" +
-                                  $"avatar description: {upload.AvatarDescription}\n" +
-                                  $"avatar name: {upload.AvatarName}\n" +
-                                  $"releasestatus {upload.Releasestatus}\n" +
-                                  $"unityversion: {upload.UnityVersion}\n");
-                Console.WriteLine("[log] ending debug log\n");
+                log_sys.log($"\n[pc asset url]: {upload.PCAssetURL}\n" +
+                            $"[image url]: {upload.ImageURL}\n" +
+                            $"[thumbnail url]: {upload.ThumbnailURL}\n" +
+                            $"[avatar id]: {upload.AvatarID}\n" +
+                            $"[author id]: {upload.AuthorID}\n" +
+                            $"[author name]: {upload.AuthorName}\n" +
+                            $"[avatar description]: {upload.AvatarDescription}\n" +
+                            $"[avatar name]: {upload.AvatarName}\n" +
+                            $"[releasestatus]: {upload.Releasestatus}\n" +
+                            $"[unityversion]: {upload.UnityVersion}\n", ConsoleColor.Blue);
             }
 
 
@@ -70,17 +71,17 @@ namespace ares_logger.main.funcs
                 {
                     streamReader.ReadToEnd();
                 }
-                Console.WriteLine($"[log] successfully uploaded {apiAvatar.name} to API");
+                log_sys.log($"[log]: successfully uploaded {apiAvatar.name} to ARES API", ConsoleColor.Green);
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("409"))
                 {
-                    Console.WriteLine($"[log] {apiAvatar.name} already exists on api.");
+                    log_sys.log($"[log]: {apiAvatar.name} already exists on ARES API", ConsoleColor.Blue);
                 }
                 else
                 {
-                    Console.WriteLine($"[log failure] unknown exception, e: {ex.Message}");
+                    log_sys.log($"[log failure]: unknown exception, e: {ex.Message}", ConsoleColor.Red);
                 }
             }
         }

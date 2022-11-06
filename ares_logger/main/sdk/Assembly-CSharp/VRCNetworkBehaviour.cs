@@ -19,7 +19,7 @@ namespace Assembly_CSharp
                 IL2Property property = Instance_Class.GetProperty(nameof(actor_id));
                 if (property == null)
                 {
-                    (property = Instance_Class.GetProperty(x => x.GetGetMethod().ReturnType.Name == typeof(int).FullName)).Name = nameof(actor_id);
+                    (property = Instance_Class.GetProperties(x => x.GetGetMethod().ReturnType.Name == typeof(int).FullName).Skip(1).FirstOrDefault()).Name = nameof(actor_id);
                     if (property == null)
                         return default;
                 }
