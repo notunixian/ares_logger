@@ -1,6 +1,7 @@
 ﻿using ares_logger.main.util;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -14,12 +15,22 @@ namespace ares_logger.main
         static extern bool SetConsoleTitle(string lpConsoleTitle);
 
         public static bool ares_debug = false;
+        public static string ares_dir;
         public static void init()
         {
-            SetConsoleTitle("ARES Logger by Unixian");
+            Console.Title = "ARES Logger by Unixian";
             log_sys.log($"[init]: successfully started ARES Logger", ConsoleColor.Green);
             log_sys.log($"[init]: made with love by unixian", ConsoleColor.Green);
             log_sys.log($"[init]: join the ARES discord server @ discord.gg/vrc-ares", ConsoleColor.Green);
+
+            if (!Directory.Exists($"{Environment.CurrentDirectory}\\ares_logger"))
+            {
+                ares_dir = $"{Environment.CurrentDirectory}\\ares_logger";
+                Directory.CreateDirectory(ares_dir);
+                log_sys.log($"[init]: created ares_logger directory at {ares_dir}", ConsoleColor.Blue);
+            }
+            else { ares_dir = $"{Environment.CurrentDirectory}\\ares_logger"; }
+
 
             if (Environment.CommandLine.Contains("--ares-debug"))
             {
@@ -30,7 +41,7 @@ namespace ares_logger.main
             patches.on_event.init_patch();
             patches.network_mgr.init_patch();
 
-            log_sys.log($"[init]: patches completed successfully", ConsoleColor.Green);
+            log_sys.log($"[init]: patches completed", ConsoleColor.Green);
         }
     }
 }

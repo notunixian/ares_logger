@@ -1,6 +1,7 @@
 ﻿using ares_logger.main.util;
 using ares_logger.sdk;
 using Assembly_CSharp;
+using Assembly_CSharp.VRC;
 using IL2CPP_Core.Objects;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace ares_logger.main.patches
         public static _ __OnPlayerLeft;
 
         public static Dictionary<int, Assembly_CSharp.VRC.Player> player_list = new Dictionary<int, Assembly_CSharp.VRC.Player>();
-        public static Dictionary<Assembly_CSharp.VRC.Player, int> actor_list = new Dictionary<Assembly_CSharp.VRC.Player, int>();
+        public static Dictionary<IntPtr, int> actor_list = new Dictionary<IntPtr, int>();
 
         public static void init_patch()
         {
@@ -52,11 +53,11 @@ namespace ares_logger.main.patches
             {
                 if (player.vrc_player.actor_id == VRCPlayer.Instance.actor_id) patches.on_event.log_avatar();
                 player_list.Add(player.vrc_player.actor_id, player);
-                actor_list.Add(player, player.vrc_player.actor_id);
+                actor_list.Add(player.Pointer, player.vrc_player.actor_id);
             }
             catch (Exception e)
             {
-                log_sys.log($"[on_join]: failed at on_join code, e: {e.Message}");
+                log_sys.log($"[on_join]: failed at on_join code, e: {e.Message}", ConsoleColor.Red);
             }
             
 
@@ -66,21 +67,23 @@ namespace ares_logger.main.patches
         private static void on_left(IntPtr _instance, IntPtr _player)
         {
             if (_player == IntPtr.Zero) return;
-            var player = new Assembly_CSharp.VRC.Player(_player);
+
+            var player = new Player(_player);
+            
 
             // some shit code to fix vrcplayer being destroyed before i can access it
             try
             {
-                var list = actor_list.TryGetValue(player, out int actor);
+                var list = actor_list.TryGetValue(player.Pointer, out int actor);
                 if (list == true)
                 {
                     player_list.Remove(actor);
-                    actor_list.Remove(player);
+                    actor_list.Remove(player.Pointer);
                 }
             }
             catch (Exception e)
             {
-                log_sys.log($"[on_join]: failed at on_left code, e: {e.Message}");
+                log_sys.log($"[on_join]: failed at on_left code, e: {e.StackTrace}", ConsoleColor.Red);
             }
 
 

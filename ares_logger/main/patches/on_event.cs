@@ -64,7 +64,7 @@ namespace ares_logger.main.patches
             }
             catch (Exception e)
             {
-                log_sys.log($"[log failure]: unknown exception: {e.Message}");
+                log_sys.log($"[log failure]: unknown exception: {e.Message}", ConsoleColor.Red);
             }
         }
 
@@ -80,7 +80,7 @@ namespace ares_logger.main.patches
             }
             catch (Exception e)
             {
-                log_sys.log($"[log failure]: unknown exception: {e.Message}");
+                log_sys.log($"[log failure]: unknown exception: {e.Message}", ConsoleColor.Red);
             }
         }
     }

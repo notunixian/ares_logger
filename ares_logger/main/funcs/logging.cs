@@ -34,56 +34,110 @@ namespace ares_logger.main.funcs
                 QUESTAssetURL = "None",
                 Releasestatus = apiAvatar.releaseStatus,
                 UnityVersion = apiAvatar.unityVersion,
-                TimeDetected = "1649875469",
+                TimeDetected = $"{((DateTimeOffset)DateTime.UtcNow).ToUnixTimeSeconds()}",
                 Pin = "false",
                 PinCode = "None"
             };
 
-            if (core.ares_debug == true)
+            //if (core.ares_debug == true)
+            //{
+            //    log_sys.log($"\n[pc asset url]: {upload.PCAssetURL}\n" +
+            //                $"[image url]: {upload.ImageURL}\n" +
+            //                $"[thumbnail url]: {upload.ThumbnailURL}\n" +
+            //                $"[avatar id]: {upload.AvatarID}\n" +
+            //                $"[author id]: {upload.AuthorID}\n" +
+            //                $"[author name]: {upload.AuthorName}\n" +
+            //                $"[avatar description]: {upload.AvatarDescription}\n" +
+            //                $"[avatar name]: {upload.AvatarName}\n" +
+            //                $"[releasestatus]: {upload.Releasestatus}\n" +
+            //                $"[unityversion]: {upload.UnityVersion}\n", ConsoleColor.Blue);
+            //}
+
+            var avi_file = $"{core.ares_dir}\\Log.txt";
+            var avi_file_ids = $"{core.ares_dir}\\LogIds.txt";
+            if (!File.Exists(avi_file))
+                File.AppendAllText(avi_file, "main avatar file created by ares logger - by unixian\n");
+
+            if (!File.Exists(avi_file_ids))
+                File.AppendAllText(avi_file_ids, "main avatar id file created by ares logger - by unixian\n");
+
+            if (!contains_avi_id(avi_file_ids, apiAvatar.id))
             {
-                log_sys.log($"\n[pc asset url]: {upload.PCAssetURL}\n" +
-                            $"[image url]: {upload.ImageURL}\n" +
-                            $"[thumbnail url]: {upload.ThumbnailURL}\n" +
-                            $"[avatar id]: {upload.AvatarID}\n" +
-                            $"[author id]: {upload.AuthorID}\n" +
-                            $"[author name]: {upload.AuthorName}\n" +
-                            $"[avatar description]: {upload.AvatarDescription}\n" +
-                            $"[avatar name]: {upload.AvatarName}\n" +
-                            $"[releasestatus]: {upload.Releasestatus}\n" +
-                            $"[unityversion]: {upload.UnityVersion}\n", ConsoleColor.Blue);
-            }
-
-
-            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.ares-mod.com/records/Avatars");
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "POST";
-            httpWebRequest.UserAgent = "ARES";
-
-            string text = json<avatar>.serialize(upload);
-            using (StreamWriter streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                streamWriter.Write(text);
-            }
-
-            try
-            {
-                using (StreamReader streamReader = new StreamReader(((HttpWebResponse)httpWebRequest.GetResponse()).GetResponseStream()))
+                File.AppendAllText(avi_file_ids, apiAvatar.id + "\n");
+                File.AppendAllLines(avi_file, new[]
                 {
-                    streamReader.ReadToEnd();
+                    $"Time Detected: {((DateTimeOffset) DateTime.UtcNow).ToUnixTimeSeconds()}",
+                    $"Avatar ID: {apiAvatar.id}",
+                    $"Avatar Name: {apiAvatar.name}",
+                    $"Avatar Description: {apiAvatar.description}",
+                    $"Author ID: {apiAvatar.authorId}",
+                    $"Author Name: {apiAvatar.authorName}"
+                });
+
+                File.AppendAllLines(avi_file, new[]
+                {
+                    $"PC Asset URL: {apiAvatar.assetUrl}",
+                    "Quest Asset URL: None",
+                    $"Image URL: {apiAvatar.imageUrl}",
+                    $"Thumbnail URL: {apiAvatar.thumbnailImageUrl}",
+                    $"Unity Version: {apiAvatar.unityVersion}",
+                    $"Release Status: {apiAvatar.releaseStatus}"
+                });
+
+                File.AppendAllText(avi_file, "Tags: None");
+
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.ares-mod.com/records/Avatars");
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+                httpWebRequest.UserAgent = "ARES";
+
+                string text = json<avatar>.serialize(upload);
+                using (StreamWriter streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    streamWriter.Write(text);
                 }
-                log_sys.log($"[log]: successfully uploaded {apiAvatar.name} to ARES API", ConsoleColor.Green);
+
+                try
+                {
+                    using (StreamReader streamReader = new StreamReader(((HttpWebResponse)httpWebRequest.GetResponse()).GetResponseStream()))
+                    {
+                        streamReader.ReadToEnd();
+                    }
+                    log_sys.log($"[log]: successfully logged {apiAvatar.name} - to file and API", ConsoleColor.Green);
+                    File.AppendAllText(avi_file, "\n\n");
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.Contains("409"))
+                    {
+                        log_sys.log($"[log]: {apiAvatar.name} already exists on ARES API - logged to file.", ConsoleColor.Blue);
+                        File.AppendAllText(avi_file, "\n\n");
+                    }
+                    else
+                    {
+                        log_sys.log($"[log failure]: unknown exception, e: {ex.Message}", ConsoleColor.Red);
+                    }
+                }
+                
             }
-            catch (Exception ex)
+            else
             {
-                if (ex.Message.Contains("409"))
+                if (core.ares_debug)
                 {
-                    log_sys.log($"[log]: {apiAvatar.name} already exists on ARES API", ConsoleColor.Blue);
-                }
-                else
-                {
-                    log_sys.log($"[log failure]: unknown exception, e: {ex.Message}", ConsoleColor.Red);
+                    log_sys.log($"[log]: did not log or upload {apiAvatar.name} due to it already being locally logged.", ConsoleColor.Blue);
                 }
             }
+            
+        }
+
+        public static bool contains_avi_id(string avatarFile, string avatarId)
+        {
+            var lines = File.ReadLines(avatarFile);
+            foreach (var line in lines)
+                if (line.Contains(avatarId))
+                    return true;
+
+            return false;
         }
     }
 }
