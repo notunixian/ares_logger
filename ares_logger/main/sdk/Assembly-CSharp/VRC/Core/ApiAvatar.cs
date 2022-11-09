@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -69,6 +70,17 @@ namespace Assembly_CSharp.VRC.Core
         {
             get => Instance_Class.GetProperty(nameof(thumbnailImageUrl)).GetGetMethod().Invoke(this)?.GetValue<IL2String>().ToString();
             set => Instance_Class.GetProperty(nameof(thumbnailImageUrl)).GetSetMethod().Invoke(this, new IntPtr[] { new IL2String_utf16(value).Pointer });
+        }
+
+        public string[] tags
+        {
+            get
+            {
+                IL2Object result = Instance_Class.GetProperty(nameof(tags)).GetGetMethod().Invoke(this);
+                if (result == null)
+                    return null;
+                return new IL2ListObject<IL2String>(result.Pointer).ToArray().Select(x => x.ToString()).ToArray();
+            }
         }
 
         public static new IL2Class Instance_Class = IL2CPP.AssemblyList["VRCCore-Standalone"].GetClass("ApiAvatar", "VRC.Core");

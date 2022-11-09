@@ -26,7 +26,7 @@ namespace ares_logger.main.funcs
                 ImageURL = apiAvatar.imageUrl,
                 ThumbnailURL = apiAvatar.thumbnailImageUrl,
                 AvatarID = apiAvatar.id,
-                Tags = "None",
+                Tags = apiAvatar.tags,
                 AuthorID = apiAvatar.authorId,
                 AuthorName = apiAvatar.authorName,
                 AvatarDescription = apiAvatar.description,
@@ -84,7 +84,18 @@ namespace ares_logger.main.funcs
                     $"Release Status: {apiAvatar.releaseStatus}"
                 });
 
-                File.AppendAllText(avi_file, "Tags: None");
+
+                if (apiAvatar.tags.Length > 0)
+                {
+                    var builder = new StringBuilder();
+                    builder.Append("Tags: ");
+                    foreach (var tag in apiAvatar.tags) builder.Append($"{tag},");
+                    File.AppendAllText(avi_file, builder.ToString().Remove(builder.ToString().LastIndexOf(",")));
+                }
+                else
+                {
+                    File.AppendAllText(avi_file, "Tags: None");
+                }
 
                 HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.ares-mod.com/records/Avatars");
                 httpWebRequest.ContentType = "application/json";
