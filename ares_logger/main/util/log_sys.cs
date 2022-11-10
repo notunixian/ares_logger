@@ -34,7 +34,7 @@ namespace ares_logger.main.util
 
         public static void log(string message)
         {
-            Console.WriteLine($"[{DateTime.Now}] {message}");
+            Console.WriteLine($"[{DateTime.Now.ToString("hh:mm:ss")}] {message}");
         }
     }
 }

@@ -39,22 +39,8 @@ namespace ares_logger.main.funcs
                 PinCode = "None"
             };
 
-            //if (core.ares_debug == true)
-            //{
-            //    log_sys.log($"\n[pc asset url]: {upload.PCAssetURL}\n" +
-            //                $"[image url]: {upload.ImageURL}\n" +
-            //                $"[thumbnail url]: {upload.ThumbnailURL}\n" +
-            //                $"[avatar id]: {upload.AvatarID}\n" +
-            //                $"[author id]: {upload.AuthorID}\n" +
-            //                $"[author name]: {upload.AuthorName}\n" +
-            //                $"[avatar description]: {upload.AvatarDescription}\n" +
-            //                $"[avatar name]: {upload.AvatarName}\n" +
-            //                $"[releasestatus]: {upload.Releasestatus}\n" +
-            //                $"[unityversion]: {upload.UnityVersion}\n", ConsoleColor.Blue);
-            //}
-
-            var avi_file = $"{core.ares_dir}\\Log.txt";
-            var avi_file_ids = $"{core.ares_dir}\\LogIds.txt";
+            var avi_file = $"{core.ares_dir}\\log.txt";
+            var avi_file_ids = $"{core.ares_dir}\\log_ids.txt";
             if (!File.Exists(avi_file))
                 File.AppendAllText(avi_file, "main avatar file created by ares logger - by unixian\n");
 
