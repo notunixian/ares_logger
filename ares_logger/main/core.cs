@@ -40,8 +40,6 @@ namespace ares_logger.main
 
             patches.on_event.init_patch();
             patches.network_mgr.init_patch();
-
-            log_sys.log($"[init]: patches completed", ConsoleColor.Green);
         }
     }
 }
