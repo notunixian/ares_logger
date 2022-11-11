@@ -32,7 +32,7 @@ namespace ares_logger.main.util
 
         public string Releasestatus { get; set; }
 
-        public string[] Tags { get; set; }
+        public string Tags { get; set; }
 
         public string Pin { get; set; }
 

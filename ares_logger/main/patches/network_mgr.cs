@@ -49,6 +49,7 @@ namespace ares_logger.main.patches
             if (_player == IntPtr.Zero) return;
             var player = new Assembly_CSharp.VRC.Player(_player);
 
+
             try
             {
                 if (player.vrc_player.actor_id == VRCPlayer.Instance.actor_id) patches.on_event.log_avatar();
@@ -57,7 +58,7 @@ namespace ares_logger.main.patches
             }
             catch (Exception e)
             {
-                log_sys.log($"[on_join]: failed at on_join code, e: {e.Message}", ConsoleColor.Red);
+                log_sys.log($"[on_join]: failed at on_join code, e: {e.Source}", ConsoleColor.Red);
             }
             
 
@@ -69,7 +70,7 @@ namespace ares_logger.main.patches
             if (_player == IntPtr.Zero) return;
 
             var player = new Player(_player);
-            
+
 
             // some shit code to fix vrcplayer being destroyed before i can access it
             try
@@ -83,7 +84,7 @@ namespace ares_logger.main.patches
             }
             catch (Exception e)
             {
-                log_sys.log($"[on_join]: failed at on_left code, e: {e.StackTrace}", ConsoleColor.Red);
+                log_sys.log($"[on_join]: failed at on_left code, e: {e.Source}", ConsoleColor.Red);
             }
 
 

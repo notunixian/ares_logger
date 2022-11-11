@@ -1,4 +1,5 @@
-﻿using IL2CPP_Core.Objects;
+﻿using ares_logger.main.util;
+using IL2CPP_Core.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +16,13 @@ namespace Assembly_CSharp
             var methodsPlayer = Instance_Class.GetMethods(x => x.GetParameters().Length == 1 && x.GetParameters()[0].ReturnType.Name == VRC.Player.Instance_Class.FullName);
             try
             {
-                methodsPlayer[0].Name = "OnPlayerJoined";
+                methodsPlayer[1].Name = "OnPlayerJoined";
             }
             catch { }
 
             try
             {
-                methodsPlayer[2].Name = "OnPlayerLeft";
+                methodsPlayer[3].Name = "OnPlayerLeft";
             }
             catch { }
         }

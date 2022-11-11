@@ -31,7 +31,7 @@ namespace ares_logger.main.patches
             }
             catch (Exception e)
             {
-                log_sys.log($"[patch fail]: onevent patch exception | e: {e.Message}", ConsoleColor.Red);
+                log_sys.log($"[patch fail]: onevent patch exception | e: {e.Source}", ConsoleColor.Red);
             }
 
         }
@@ -55,16 +55,16 @@ namespace ares_logger.main.patches
         {
             try
             {
-
                 var list = network_mgr.player_list.TryGetValue(actor_id, out var player);
                 if (list == true)
                 {
+                    
                     funcs.logging.execute_log(player.vrc_player, true);
                 }
             }
             catch (Exception e)
             {
-                log_sys.log($"[log failure]: unknown exception: {e.Message}", ConsoleColor.Red);
+                log_sys.log($"[log failure]: unknown exception: {e.Source}", ConsoleColor.Red);
             }
         }
 
@@ -80,7 +80,7 @@ namespace ares_logger.main.patches
             }
             catch (Exception e)
             {
-                log_sys.log($"[log failure]: unknown exception: {e.Message}", ConsoleColor.Red);
+                log_sys.log($"[log failure]: unknown exception: {e.Source}", ConsoleColor.Red);
             }
         }
     }
