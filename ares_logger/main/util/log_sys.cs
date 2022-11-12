@@ -9,7 +9,7 @@ namespace ares_logger.main.util
 {
     internal class log_sys
     {
-        // ref: https://stackoverflow.com/a/60492990
+        // credits: stackoverflow
         public static void log(string message, ConsoleColor color)
         {
             var pieces = Regex.Split(message, @"(\[[^\]]*\])");
@@ -35,6 +35,16 @@ namespace ares_logger.main.util
         public static void log(string message)
         {
             Console.WriteLine($"[{DateTime.Now.ToString("hh:mm:ss")}] {message}");
+        }
+
+        public static void debug_log(string message)
+        {
+            if (!core.ares_debug) return;
+
+            if (core.ares_debug)
+            {
+                log($"[debug log]: {message}", ConsoleColor.Cyan);
+            }
         }
     }
 }

@@ -17,19 +17,28 @@ namespace ares_logger.main.funcs
     {
         public static void execute_log(VRCPlayer player, bool aviChange = false)
         {
-            try
-            {
-                if (player.Pointer == IntPtr.Zero) return;
-                if (player.AvatarModel.Pointer == IntPtr.Zero) return;
+            if (player.Pointer == IntPtr.Zero) return;
+            if (player.AvatarModel.Pointer == IntPtr.Zero) return;
 
-                var apiAvatar = player.AvatarModel;
+            var apiAvatar = player.AvatarModel;
+
+            var avi_file = $"{core.ares_dir}\\log.txt";
+            var avi_file_ids = $"{core.ares_dir}\\log_ids.txt";
+            if (!File.Exists(avi_file))
+                File.AppendAllText(avi_file, "main avi file, made by ares logger\n");
+
+            if (!File.Exists(avi_file_ids))
+                File.AppendAllText(avi_file_ids, "main avi id file, made by ares logger\n");
+
+            if (!contains_avi_id(avi_file_ids, apiAvatar.id))
+            {
                 var upload = new avatar
                 {
                     PCAssetURL = apiAvatar.assetUrl,
                     ImageURL = apiAvatar.imageUrl,
                     ThumbnailURL = apiAvatar.thumbnailImageUrl,
                     AvatarID = apiAvatar.id,
-                    Tags = string.Join(", ", apiAvatar.tags),
+                    Tags = (apiAvatar.tags.Length > 1) ? string.Join(", ", apiAvatar.tags) : "None",
                     AuthorID = apiAvatar.authorId,
                     AuthorName = apiAvatar.authorName,
                     AvatarDescription = apiAvatar.description,
@@ -42,95 +51,80 @@ namespace ares_logger.main.funcs
                     PinCode = "None"
                 };
 
-                var avi_file = $"{core.ares_dir}\\log.txt";
-                var avi_file_ids = $"{core.ares_dir}\\log_ids.txt";
-                if (!File.Exists(avi_file))
-                    File.AppendAllText(avi_file, "main avatar file created by ares logger - by unixian\n");
-
-                if (!File.Exists(avi_file_ids))
-                    File.AppendAllText(avi_file_ids, "main avatar id file created by ares logger - by unixian\n");
-
-                if (!contains_avi_id(avi_file_ids, apiAvatar.id))
+                File.AppendAllText(avi_file_ids, apiAvatar.id + "\n");
+                File.AppendAllLines(avi_file, new[]
                 {
-                    File.AppendAllText(avi_file_ids, apiAvatar.id + "\n");
-                    File.AppendAllLines(avi_file, new[]
-                    {
-                        $"Time Detected: {((DateTimeOffset) DateTime.UtcNow).ToUnixTimeSeconds()}",
-                        $"Avatar ID: {apiAvatar.id}",
-                        $"Avatar Name: {apiAvatar.name}",
-                        $"Avatar Description: {apiAvatar.description}",
-                        $"Author ID: {apiAvatar.authorId}",
-                        $"Author Name: {apiAvatar.authorName}"
-                    });
+                    $"Time Detected: {((DateTimeOffset) DateTime.UtcNow).ToUnixTimeSeconds()}",
+                    $"Avatar ID: {apiAvatar.id}",
+                    $"Avatar Name: {apiAvatar.name}",
+                    $"Avatar Description: {apiAvatar.description}",
+                    $"Author ID: {apiAvatar.authorId}",
+                    $"Author Name: {apiAvatar.authorName}"
+                });
 
-                    File.AppendAllLines(avi_file, new[]
-                    {
-                        $"PC Asset URL: {apiAvatar.assetUrl}",
-                        "Quest Asset URL: None",
-                        $"Image URL: {apiAvatar.imageUrl}",
-                        $"Thumbnail URL: {apiAvatar.thumbnailImageUrl}",
-                        $"Unity Version: {apiAvatar.unityVersion}",
-                        $"Release Status: {apiAvatar.releaseStatus}"
-                    });
+                File.AppendAllLines(avi_file, new[]
+                {
+                    $"PC Asset URL: {apiAvatar.assetUrl}",
+                    "Quest Asset URL: None",
+                    $"Image URL: {apiAvatar.imageUrl}",
+                    $"Thumbnail URL: {apiAvatar.thumbnailImageUrl}",
+                    $"Unity Version: {apiAvatar.unityVersion}",
+                    $"Release Status: {apiAvatar.releaseStatus}"
+                });
 
 
-                    if (apiAvatar.tags.Length > 0)
-                    {
-                        var builder = new StringBuilder();
-                        builder.Append("Tags: ");
-                        foreach (var tag in apiAvatar.tags) builder.Append($"{tag},");
-                        File.AppendAllText(avi_file, builder.ToString().Remove(builder.ToString().LastIndexOf(",")));
-                    }
-                    else
-                    {
-                        File.AppendAllText(avi_file, "Tags: None");
-                    }
-
-                    HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.ares-mod.com/records/Avatars");
-                    httpWebRequest.ContentType = "application/json";
-                    httpWebRequest.Method = "POST";
-                    httpWebRequest.UserAgent = "ARES";
-
-                    string text = json<avatar>.serialize(upload);
-                    using (StreamWriter streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                    {
-                        streamWriter.Write(text);
-                    }
-
-                    try
-                    {
-                        using (StreamReader streamReader = new StreamReader(((HttpWebResponse)httpWebRequest.GetResponse()).GetResponseStream()))
-                        {
-                            streamReader.ReadToEnd();
-                        }
-                        log_sys.log($"[log]: successfully logged {apiAvatar.name} - to file and API", ConsoleColor.Green);
-                        File.AppendAllText(avi_file, "\n\n");
-                    }
-                    catch (Exception ex)
-                    {
-                        if (ex.Message.Contains("409"))
-                        {
-                            log_sys.log($"[log]: {apiAvatar.name} already exists on ARES API - logged to file.", ConsoleColor.Blue);
-                            File.AppendAllText(avi_file, "\n\n");
-                        }
-                        else
-                        {
-                            log_sys.log($"[log failure]: unknown exception in upload, e: {ex.Message}", ConsoleColor.Red);
-                        }
-                    }
-
+                if (apiAvatar.tags.Length > 0)
+                {
+                    var builder = new StringBuilder();
+                    builder.Append("Tags: ");
+                    foreach (var tag in apiAvatar.tags) builder.Append($"{tag},");
+                    File.AppendAllText(avi_file, builder.ToString().Remove(builder.ToString().LastIndexOf(",")));
                 }
                 else
                 {
-                    if (core.ares_debug)
+                    File.AppendAllText(avi_file, "Tags: None");
+                }
+
+                HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.ares-mod.com/records/Avatars");
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+                httpWebRequest.UserAgent = "ARES";
+
+                string text = json<avatar>.serialize(upload);
+                using (StreamWriter streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    streamWriter.Write(text);
+                }
+
+                try
+                {
+                    using (StreamReader streamReader = new StreamReader(((HttpWebResponse)httpWebRequest.GetResponse()).GetResponseStream()))
                     {
-                        log_sys.log($"[log]: did not log or upload {apiAvatar.name} due to it already being locally logged.", ConsoleColor.Blue);
+                        streamReader.ReadToEnd();
+                    }
+                    log_sys.log($"[log]: successfully logged {apiAvatar.name} to file and API", ConsoleColor.Green);
+                    File.AppendAllText(avi_file, "\n\n");
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message.Contains("409"))
+                    {
+                        log_sys.log($"[log]: {apiAvatar.name} already exists on ARES API, logged to file.", ConsoleColor.Blue);
+                        File.AppendAllText(avi_file, "\n\n");
+                    }
+                    else
+                    {
+                        log_sys.log($"[log failure]: unknown exception in upload, e: {ex.Message}", ConsoleColor.Red);
                     }
                 }
+
             }
-            catch (Exception ex)
+            else
             {
-                log_sys.log($"[log failure]: unknown exception in execute log, e: {ex.Message}", ConsoleColor.Red);
+                if (core.ares_debug)
+                {
+                    log_sys.debug_log($"skipped {apiAvatar.name} -> already exists on file");
+                }
             }
             
         }

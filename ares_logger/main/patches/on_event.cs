@@ -41,6 +41,7 @@ namespace ares_logger.main.patches
             var event_data = new EventData(data);
             switch (event_data.Code)
             {
+                // event 223 does not contain a valid sender at all in my testing, so it's not going to be used here.
                 case 42:
                     log_avatar(event_data.Sender);
                     break;
@@ -53,12 +54,12 @@ namespace ares_logger.main.patches
 
         private static void log_avatar(int actor_id)
         {
+            log_sys.debug_log($"log_avatar (int actor_id) enter");
             try
             {
                 var list = network_mgr.player_list.TryGetValue(actor_id, out var player);
                 if (list == true)
                 {
-                    
                     funcs.logging.execute_log(player.vrc_player, true);
                 }
             }
@@ -66,11 +67,13 @@ namespace ares_logger.main.patches
             {
                 log_sys.log($"[log failure]: unknown exception: {e.Source}", ConsoleColor.Red);
             }
+            log_sys.debug_log($"log_avatar (int actor_id) exit");
         }
 
         // override that takes 0 params for when you just join a world.
         public static void log_avatar()
         {
+            log_sys.debug_log($"log_avatar (void) enter");
             try
             {
                 foreach (VRCPlayer player in UnityEngine.Object.FindObjectsOfType<VRCPlayer>())
@@ -82,6 +85,7 @@ namespace ares_logger.main.patches
             {
                 log_sys.log($"[log failure]: unknown exception: {e.Source}", ConsoleColor.Red);
             }
+            log_sys.debug_log($"log_avatar (void) exit");
         }
     }
 }
