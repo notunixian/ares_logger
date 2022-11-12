@@ -75,7 +75,7 @@ int main()
 	auto ldr_res = URLDownloadToFile(0, "https://ares-mod.com/logger/clr_loader.dll", "clr_loader.dll", 0, NULL);
 	if (ldr_res != S_OK) std::cout << "failed to download loader" << std::endl;
 
-	if (log_res == S_OK && ldr_res == S_OK) std::cout << "successfully downloaded all required files, proceeding to injection." << std::endl << std::endl;
+	if (log_res == S_OK && ldr_res == S_OK) std::cout << "successfully downloaded all required files, you may now start vrchat." << std::endl << std::endl;
 
 	face_injecor_v2(xor_a("UnityWndClass"), xor_w(L"clr_loader.dll"));
 
