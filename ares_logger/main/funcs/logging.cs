@@ -88,7 +88,7 @@ namespace ares_logger.main.funcs
                 HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.ares-mod.com/records/Avatars");
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
-                httpWebRequest.UserAgent = "ARES";
+                httpWebRequest.UserAgent = "ARES Logger";
 
                 string text = json<avatar>.serialize(upload);
                 using (StreamWriter streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
@@ -115,6 +115,7 @@ namespace ares_logger.main.funcs
                     else
                     {
                         log_sys.log($"[log failure]: unknown exception in upload, e: {ex.Message}", ConsoleColor.Red);
+                        File.AppendAllText(avi_file, "\n\n");
                     }
                 }
 
