@@ -1,4 +1,5 @@
-﻿using ares_logger.main.util;
+﻿using ares_logger.main.config;
+using ares_logger.main.util;
 using ares_logger.util;
 using Assembly_CSharp;
 using Assembly_CSharp.VRC.Core;
@@ -29,6 +30,11 @@ namespace ares_logger.main.funcs
 
             if (!File.Exists(avi_file_ids))
                 File.AppendAllText(avi_file_ids, "main avi id file, made by ares logger\n");
+
+            if (config_handler.get_config().ignore_friends == true && APIUser.IsFriendsWith(player.player.api_user.id))
+            {
+                log_sys.debug_log("ignoring friend due to ignore_friends being set to true.");
+            }
 
             if (!contains_avi_id(avi_file_ids, apiAvatar.id))
             {

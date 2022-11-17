@@ -24,6 +24,17 @@ namespace Assembly_CSharp.VRC
             }
         }
 
+        public APIUser api_user
+        {
+            get
+            {
+                IL2Property property = Instance_Class.GetProperty(nameof(api_user));
+                if (property == null)
+                    (property = Instance_Class.GetProperty(APIUser.Instance_Class)).Name = nameof(api_user);
+                return property?.GetGetMethod().Invoke(this)?.GetValue<APIUser>();
+            }
+        }
+
 
         public static new IL2Class Instance_Class = IL2CPP.AssemblyList["Assembly-CSharp"].GetClasses().FirstOrDefault(x => x.GetField("_USpeaker") != null);
     }

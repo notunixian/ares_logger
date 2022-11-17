@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="main\config\config.cs" />
+    <Compile Include="main\config\config_handler.cs" />
     <Compile Include="main\funcs\logging.cs" />
     <Compile Include="main\handler\main_domain.cs" />
     <Compile Include="main\handler\domain_handler.cs" />
@@ -57,6 +59,7 @@
     <Compile Include="main\sdk\Assembly-CSharp\VRCPlayer.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\ApiAvatar.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\ApiModel.cs" />
+    <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\APIUser.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\VRCNetworkingClient.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRC\Player.cs" />
     <Compile Include="main\sdk\IL2CPP\CastUtils.cs" />
