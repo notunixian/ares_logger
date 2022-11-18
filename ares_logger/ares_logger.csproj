@@ -56,8 +56,6 @@
     <Compile Include="main\patches\network_mgr.cs" />
     <Compile Include="main\patches\on_event.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\NetworkManager.cs" />
-    <Compile Include="main\sdk\Assembly-CSharp\PortalInternal.cs" />
-    <Compile Include="main\sdk\Assembly-CSharp\RoomManager.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRCNetworkBehaviour.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRCPlayer.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\AssetBundleDownloadManager.cs" />

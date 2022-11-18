@@ -40,8 +40,8 @@ namespace ares_logger.main.funcs
 
             if (config_handler.get_config().log_avatars == false) return;
 
-            var avi_file = $"{core.ares_dir}\\log.txt";
-            var avi_file_ids = $"{core.ares_dir}\\log_ids.txt";
+            var avi_file = $"{core.ares_dir}\\avi_log.txt";
+            var avi_file_ids = $"{core.ares_dir}\\avi_log_ids.txt";
             if (!File.Exists(avi_file))
                 File.AppendAllText(avi_file, "main avi file, made by ares logger\n");
 
