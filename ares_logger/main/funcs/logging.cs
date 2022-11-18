@@ -20,6 +20,7 @@ namespace ares_logger.main.funcs
         {
             if (player.Pointer == IntPtr.Zero) return;
             if (player.AvatarModel.Pointer == IntPtr.Zero) return;
+            if (config_handler.get_config().log_avatars == false) return;
 
             var apiAvatar = player.AvatarModel;
 
@@ -31,9 +32,12 @@ namespace ares_logger.main.funcs
             if (!File.Exists(avi_file_ids))
                 File.AppendAllText(avi_file_ids, "main avi id file, made by ares logger\n");
 
+            
+
             if (config_handler.get_config().ignore_friends == true && APIUser.IsFriendsWith(player.player.api_user.id))
             {
                 log_sys.debug_log("ignoring friend due to ignore_friends being set to true.");
+                return;
             }
 
             if (!contains_avi_id(avi_file_ids, apiAvatar.id))

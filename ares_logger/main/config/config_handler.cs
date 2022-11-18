@@ -13,36 +13,56 @@ namespace ares_logger.main.config
         static config config;
         public static void init_config()
         {
-            log_sys.debug_log("init config...");
-            var timer = new Stopwatch();
-            timer.Start();
+            try
+            {
+                log_sys.debug_log("init config...");
+                var timer = new Stopwatch();
+                timer.Start();
 
-            if (File.Exists($"{core.ares_dir}\\config.json"))
-            {
-                log_sys.debug_log("deserialize from existing config");
-                config = json<config>.deserialize(File.ReadAllText(path));
-            }
-            else
-            {
-                log_sys.debug_log("creating config");
-                File.Create($"{core.ares_dir}\\config.json");
-                var conf = new config
+                if (File.Exists(path))
                 {
-                    log_avatars = true,
-                    ignore_friends = false
-                };
-                var text = json<config>.serialize(conf);
-                File.WriteAllText(path, text);
-            }
+                    if (File.ReadAllText(path) == string.Empty) create_config();
+                    log_sys.debug_log("deserialize from existing config");
+                    config = json<config>.deserialize(File.ReadAllText(path));
 
-            log_sys.log($"[config]: successfully finished config init in {timer.Elapsed.ToString(@"m\:ss\.fff")}");
-            init = true;
+                    timer.Stop();
+                    log_sys.log($"[config]: successfully read from existing config in {timer.Elapsed.ToString(@"m\:ss\.fff")}", ConsoleColor.Green);
+                }
+                else
+                {
+                    create_config();
+
+                    timer.Stop();
+                    log_sys.log($"[config]: successfully created a new config in {timer.Elapsed.ToString(@"m\:ss\.fff")}", ConsoleColor.Green);
+                }
+                
+                init = true;
+            }
+            catch (Exception e)
+            {
+                log_sys.log($"[config failure]: unknown exception in config init, e: {e.Message}", ConsoleColor.Red);
+            }
         }
 
         public static config get_config()
         {
             if (init == false || config == null) init_config();
             return config;
+        }
+
+        public static void create_config()
+        {
+            log_sys.debug_log("creating config");
+            var stream = File.Create(path);
+            stream.Close();
+            var conf = new config
+            {
+                log_avatars = true,
+                ignore_friends = false
+            };
+            var text = json<config>.serialize(conf);
+            File.WriteAllText(path, text);
+            conf = config;
         }
     }
 }

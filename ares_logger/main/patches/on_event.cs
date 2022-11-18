@@ -65,7 +65,7 @@ namespace ares_logger.main.patches
             }
             catch (Exception e)
             {
-                log_sys.log($"[log failure]: unknown exception: {e.Source}", ConsoleColor.Red);
+                log_sys.log($"[log failure]: unknown exception: {e.Message}", ConsoleColor.Red);
             }
             log_sys.debug_log($"log_avatar (int actor_id) exit");
         }

@@ -7,13 +7,10 @@ using System.Threading.Tasks;
 
 namespace ares_logger.main.config
 {
-    [DataContract]
-    internal class config
+    public class config
     {
-        [DataMember]
         public bool log_avatars {get; set;}
 
-        [DataMember]
         public bool ignore_friends { get; set; }
     }
 }
