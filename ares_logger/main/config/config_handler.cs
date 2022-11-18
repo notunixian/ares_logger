@@ -58,7 +58,8 @@ namespace ares_logger.main.config
             var conf = new config
             {
                 log_avatars = true,
-                ignore_friends = false
+                ignore_friends = false,
+                log_worlds = true,
             };
             var text = json<config>.serialize(conf);
             File.WriteAllText(path, text);

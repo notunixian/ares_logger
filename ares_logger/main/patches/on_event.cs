@@ -58,10 +58,7 @@ namespace ares_logger.main.patches
             try
             {
                 var list = network_mgr.player_list.TryGetValue(actor_id, out var player);
-                if (list == true)
-                {
-                    funcs.logging.execute_log(player.vrc_player, true);
-                }
+                if (list == true) funcs.logging.execute_log(player.vrc_player, true);
             }
             catch (Exception e)
             {

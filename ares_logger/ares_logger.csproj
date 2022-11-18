@@ -52,14 +52,20 @@
     <Compile Include="main\handler\main_domain.cs" />
     <Compile Include="main\handler\domain_handler.cs" />
     <Compile Include="main\core.cs" />
+    <Compile Include="main\patches\download_mgr.cs" />
     <Compile Include="main\patches\network_mgr.cs" />
     <Compile Include="main\patches\on_event.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\NetworkManager.cs" />
+    <Compile Include="main\sdk\Assembly-CSharp\PortalInternal.cs" />
+    <Compile Include="main\sdk\Assembly-CSharp\RoomManager.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRCNetworkBehaviour.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRCPlayer.cs" />
+    <Compile Include="main\sdk\Assembly-CSharp\AssetBundleDownloadManager.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\ApiAvatar.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\ApiModel.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\APIUser.cs" />
+    <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\ApiWorld.cs" />
+    <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\ApiWorldInstance.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\VRCNetworkingClient.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRC\Player.cs" />
     <Compile Include="main\sdk\IL2CPP\CastUtils.cs" />
@@ -175,6 +181,7 @@
     <Compile Include="main\util\hook.cs" />
     <Compile Include="main\util\json.cs" />
     <Compile Include="main\util\log_sys.cs" />
+    <Compile Include="main\util\world.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

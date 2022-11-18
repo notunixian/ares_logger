@@ -12,5 +12,7 @@ namespace ares_logger.main.config
         public bool log_avatars {get; set;}
 
         public bool ignore_friends { get; set; }
+
+        public bool log_worlds { get; set; }
     }
 }

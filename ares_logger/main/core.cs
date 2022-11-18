@@ -12,9 +12,6 @@ namespace ares_logger.main
 {
     public class core
     {
-        [DllImport("kernel32.dll")]
-        static extern bool SetConsoleTitle(string lpConsoleTitle);
-
         public static bool ares_debug = false;
         public static string ares_dir;
         public static void init()
@@ -41,6 +38,7 @@ namespace ares_logger.main
             config_handler.init_config();
             patches.on_event.init_patch();
             patches.network_mgr.init_patch();
+            patches.download_mgr.init_patch();
         }
     }
 }

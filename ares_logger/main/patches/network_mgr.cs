@@ -58,7 +58,7 @@ namespace ares_logger.main.patches
             }
             catch (Exception e)
             {
-                log_sys.log($"[on_join]: failed at on_join code, e: {e.Source}", ConsoleColor.Red);
+                log_sys.log($"[on_join]: failed at on_join code, e: {e.Message}", ConsoleColor.Red);
             }
             
 
@@ -84,7 +84,7 @@ namespace ares_logger.main.patches
             }
             catch (Exception e)
             {
-                log_sys.log($"[on_join]: failed at on_left code, e: {e.Source}", ConsoleColor.Red);
+                log_sys.log($"[on_join]: failed at on_left code, e: {e.Message}", ConsoleColor.Red);
             }
 
 
