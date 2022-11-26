@@ -43,8 +43,12 @@ namespace ares_logger.main
             patches.on_event.init_patch();
             patches.network_mgr.init_patch();
             patches.download_mgr.init_patch();
-            new Thread(() => { while (true) { handle_cmd(); } }).Start();
-        }
+            Thread cmd_thread = new Thread(() => { while (true) { handle_cmd(); } });
+
+            try { cmd_thread.Start(); }
+            catch (Exception e) { log_sys.log($"[console error]: unable to start command handler thread, commands will not work. e: {e.Message} | in: {e.InnerException.Message}"); }
+
+            }
 
 
         public static string[] args = new string[0];

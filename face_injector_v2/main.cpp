@@ -18,7 +18,6 @@ int main()
 	ifstream file("vrchat.txt");
 
 	while (getline(file, text)) {
-		// Output the text from the file
 		cout << "saved vrchat dir: " << text << std::endl;
 	}
 
@@ -70,8 +69,6 @@ int main()
 
 	std::cout << std::endl << "downloading files..." << std::endl;
 
-
-
 	auto log_res = URLDownloadToFile(0, "https://ares-mod.com/logger/ares_logger.dll", (text + "\\ares_logger.dll").c_str(), 0, NULL);
 	_com_error log_err(log_res);
 	LPCTSTR log_msg = log_err.ErrorMessage();
@@ -102,6 +99,7 @@ int main()
 
 	if (type == 'y') ShellExecuteW(NULL, L"open", L"steam://rungameid/438100", NULL, NULL, 1);
 	if (type == 'n') std::cout << "you may start vrchat on your own." << std::endl;
+	std::cout << std::endl;
 
 	face_injecor_v2(xor_a("UnityWndClass"), xor_w(L"clr_loader.dll"));
 

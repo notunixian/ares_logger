@@ -31,7 +31,7 @@ void start_driver()
 
 		driver().handle_driver();
 		driver().is_loaded() ? cout << xor_a("driver retry #2 success!") << endl : cout << xor_a("final retry failed, make sure your anti-virus is not blocking the vulnerable driver.") << endl;
-		if (!driver().is_loaded()) std::terminate();
+		if (!driver().is_loaded()) { system("pause"); std::terminate(); }
 	}
 
 
