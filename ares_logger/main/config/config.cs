@@ -7,20 +7,16 @@ using System.Threading.Tasks;
 
 namespace ares_logger.main.config
 {
-    [DataContract]
-    public class config
+    public class conf
     {
-        // future proofing, i'll add checks to add new values if the version mismatches
-        [DataMember]
-        public int version = 1;
+        public static config_handler<values> handler;
+    }
 
-        [DataMember]
-        public bool log_avatars {get; set;}
-
-        [DataMember]
-        public bool ignore_friends { get; set; }
-
-        [DataMember]
-        public bool log_worlds { get; set; }
+    public class values
+    {
+        public bool log_avatars { get; set; } = true;
+        public bool ignore_friends { get; set; } = false;
+        public bool log_worlds { get; set; } = true;
+        public bool enable_unsafe_features { get; set; } = false;
     }
 }

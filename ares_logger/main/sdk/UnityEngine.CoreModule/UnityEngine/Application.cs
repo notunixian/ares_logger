@@ -16,6 +16,11 @@ namespace UnityEngine
             get => Instance_Class.GetProperty(nameof(unityVersion)).GetGetMethod().Invoke()?.GetValue<IL2String>().ToString();
         }
 
+        public static string version
+        {
+            get => Instance_Class.GetProperty(nameof(version)).GetGetMethod().Invoke()?.GetValue<IL2String>().ToString();
+        }
+
         public static string streamingAssetsPath
         {
             get => Instance_Class.GetProperty(nameof(streamingAssetsPath)).GetGetMethod().Invoke()?.GetValue<IL2String>().ToString();

@@ -14,5 +14,6 @@ this project also requires a working injecter, you can use my [fork of face inje
 * [LargestBoi](https://github.com/LargestBoi) - originally got me started on this and created the original logger
 * [ShrekamusChrist](https://github.com/Dean2k) - helped me understand ares api and created the original logger
 * [BlazeBest](https://github.com/BlazeBest) - majority of SDK classes
+* _1234/hacker (github?) - providing me with a config class that was 1000x better than the one i had, much thanks.
 
 

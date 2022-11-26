@@ -1,69 +1,71 @@
-﻿using ares_logger.main.util;
-using ares_logger.util;
-using System;
-using System.Diagnostics;
+﻿using System;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace ares_logger.main.config
 {
-    internal class config_handler
+    // thx to _1234/hacker for this config system, 1000x better than what i had before
+    public class config_handler<T> where T : class
     {
-        static string path = $"{core.ares_dir}\\config.json";
-        static bool init = false;
-        static config config;
-        public static void init_config()
+        private string FilePath { get; }
+        public T Config { get; private set; }
+        public event Action PreOnConfigUpdate;
+        public event Action OnConfigUpdate;
+
+        public config_handler(string Path)
+        {
+            FilePath = Path;
+
+            var Watch = System.IO.Path.GetDirectoryName(FilePath);
+
+            if (Watch != null)
+            {
+                var watcher = new FileSystemWatcher(Watch, System.IO.Path.GetFileName(FilePath))
+                {
+                    NotifyFilter = NotifyFilters.LastWrite,
+                    EnableRaisingEvents = true
+                };
+                watcher.Changed += UpdateConfig;
+            }
+            CheckConfig();
+
+            Config = JsonConvert.DeserializeObject<T>(File.ReadAllText(FilePath));
+        }
+
+        private void CheckConfig()
+        {
+            if (!File.Exists(FilePath) || new System.IO.FileInfo(FilePath).Length < 2)
+                File.WriteAllText(FilePath, JsonConvert.SerializeObject(Activator.CreateInstance(typeof(T)), Formatting.Indented, new JsonSerializerSettings()));
+        }
+
+        private void UpdateConfig(object obj, FileSystemEventArgs args)
         {
             try
             {
-                log_sys.debug_log("init config...");
-                var timer = new Stopwatch();
-                timer.Start();
+                var UpdatedObject = JsonConvert.DeserializeObject<T>(File.ReadAllText(FilePath));
 
-                if (File.Exists(path))
-                {
-                    if (File.ReadAllText(path) == string.Empty) create_config();
-                    log_sys.debug_log("deserialize from existing config");
-                    config = json<config>.deserialize(File.ReadAllText(path));
+                if (UpdatedObject != null)
+                    foreach (var Prop in UpdatedObject.GetType()?.GetProperties())
+                    {
+                        var Original = Config.GetType().GetProperty(Prop?.Name);
 
-                    timer.Stop();
-                    log_sys.log($"[config]: successfully read from existing config in {timer.Elapsed.ToString(@"m\:ss\.fff")}", ConsoleColor.Green);
-                }
-                else
-                {
-                    create_config();
+                        if (Original != null
+                            && Prop.GetValue(UpdatedObject) != Original.GetValue(Config))
+                        {
+                            PreOnConfigUpdate?.Invoke();
+                            Config = UpdatedObject;
 
-                    timer.Stop();
-                    log_sys.log($"[config]: successfully created a new config in {timer.Elapsed.ToString(@"m\:ss\.fff")}", ConsoleColor.Green);
-                }
-                
-                init = true;
+                            OnConfigUpdate?.Invoke();
+                            break;
+                        }
+                    }
             }
-            catch (Exception e)
-            {
-                log_sys.log($"[config failure]: unknown exception in config init, e: {e.Message}", ConsoleColor.Red);
+            catch
+            { // Throw Error
             }
         }
 
-        public static config get_config()
-        {
-            if (init == false || config == null) init_config();
-            return config;
-        }
-
-        public static void create_config()
-        {
-            log_sys.debug_log("creating config");
-            var stream = File.Create(path);
-            stream.Close();
-            var conf = new config
-            {
-                log_avatars = true,
-                ignore_friends = false,
-                log_worlds = true,
-            };
-            var text = json<config>.serialize(conf);
-            File.WriteAllText(path, text);
-            conf = config;
-        }
+        public void Save() =>
+            File.WriteAllText(FilePath, JsonConvert.SerializeObject(Config, Formatting.Indented, new JsonSerializerSettings()));
     }
 }

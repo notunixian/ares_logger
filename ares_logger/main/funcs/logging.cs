@@ -38,7 +38,7 @@ namespace ares_logger.main.funcs
             if (player.Pointer == IntPtr.Zero) return;
             if (player.vrc_player.AvatarModel.Pointer == IntPtr.Zero) return;
 
-            if (config_handler.get_config().log_avatars == false) return;
+            if (conf.handler.Config.log_avatars == false) return;
 
             var avi_file = $"{core.ares_dir}\\avi_log.txt";
             var avi_file_ids = $"{core.ares_dir}\\avi_log_ids.txt";
@@ -50,7 +50,7 @@ namespace ares_logger.main.funcs
 
 
 
-            if (config_handler.get_config().ignore_friends == true && APIUser.IsFriendsWith(player.api_user.id))
+            if (conf.handler.Config.ignore_friends == true && APIUser.IsFriendsWith(player.api_user.id))
             {
                 log_sys.debug_log("ignoring friend due to ignore_friends being set to true.");
                 return;
@@ -167,7 +167,7 @@ namespace ares_logger.main.funcs
 
         public static void process_world(ApiWorld apiWorld)
         {
-            if (config_handler.get_config().log_worlds == false) return;
+            if (conf.handler.Config.log_worlds == false) return;
             if (apiWorld.Pointer == IntPtr.Zero) return;
 
             var wrld_file = $"{core.ares_dir}\\wrld_log.txt";

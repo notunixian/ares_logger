@@ -1,11 +1,14 @@
 ﻿using ares_logger.main.config;
 using ares_logger.main.util;
+using Assembly_CSharp.VRC.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ares_logger.main
@@ -35,10 +38,56 @@ namespace ares_logger.main
                 ares_debug = true;
             }
 
-            config_handler.init_config();
+            conf.handler = new(ares_dir + "\\ares_config.json");
             patches.on_event.init_patch();
             patches.network_mgr.init_patch();
             patches.download_mgr.init_patch();
+            new Thread(() => { while (true) { handle_cmd(); } }).Start();
+        }
+
+
+        public static string[] args = new string[0];
+        public static void handle_cmd()
+        {
+            string c_read = Console.ReadLine();
+            if (string.IsNullOrWhiteSpace(c_read)) return;
+            try
+            {
+                args = console_util.split_cmd(c_read).ToArray();
+            }
+            catch { return; }
+
+            switch (args[0])
+            {
+                case "clear":
+                    {
+                        Console.Clear();
+                        log_sys.log("[console]: successfully cleared console", ConsoleColor.Green);
+                        break;
+                    }
+                case "download":
+                    {
+                        if (args.Length > 1)
+                        {
+                            if (conf.handler.Config.enable_unsafe_features == false)
+                            {
+                                log_sys.log("[console error]: you do not have unsafe features enabled!", ConsoleColor.Red);
+                                break;
+                            }
+
+                            if (args[1].StartsWith("http")) downloader.download(args[1]);
+                            else log_sys.log("[console error]: you did not provide a valid url.");
+                        }
+                        else 
+                        { 
+                            log_sys.log("[console info]: download ([url to download]) | downloads an avatar based off it's asset url, requires the enable_unsafe_feature flag enabled in your config.", ConsoleColor.Blue); 
+                        }
+                        break;
+                    }
+                default: return;
+            }
+            args = new string[0];
         }
     }
+
 }
