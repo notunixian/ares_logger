@@ -42,6 +42,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,7 +64,6 @@
     <Compile Include="main\sdk\Assembly-CSharp\VRCNetworkBehaviour.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRCPlayer.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\AssetBundleDownloadManager.cs" />
-    <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\ApiContainer.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\ApiAvatar.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\ApiModel.cs" />
     <Compile Include="main\sdk\Assembly-CSharp\VRC\Core\APIUser.cs" />
@@ -181,6 +181,7 @@
     <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\WaitForSeconds.cs" />
     <Compile Include="main\sdk\UnityEngine.CoreModule\UnityEngine\YieldInstruction.cs" />
     <Compile Include="main\util\avatar.cs" />
+    <Compile Include="main\util\clipboard.cs" />
     <Compile Include="main\util\console.cs" />
     <Compile Include="main\util\downloader.cs" />
     <Compile Include="main\util\hook.cs" />
