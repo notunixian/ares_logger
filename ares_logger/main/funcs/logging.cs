@@ -209,7 +209,7 @@ namespace ares_logger.main.funcs
 
                 File.AppendAllLines(wrld_file, new[]
                 {
-                    $"PC Asset URL: {apiWorld.assetUrl}",
+                    $"PC Asset URL: {apiWorld.assetUrl.Replace("https://api.vrchat.cloud/", "https://vrchat.com/")} ",
                     $"Image URL: {apiWorld.imageUrl}",
                     $"Thumbnail URL: {apiWorld.thumbnailImageUrl}",
                     $"Unity Version: {apiWorld.unityVersion}",
