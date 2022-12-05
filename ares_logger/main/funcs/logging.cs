@@ -90,7 +90,7 @@ namespace ares_logger.main.funcs
 
                 File.AppendAllLines(avi_file, new[]
                 {
-                    $"PC Asset URL: {apiAvatar.assetUrl}",
+                    $"PC Asset URL: {apiAvatar.assetUrl.Replace("https://api.vrchat.cloud/", "https://vrchat.com/")}",
                     "Quest Asset URL: None",
                     $"Image URL: {apiAvatar.imageUrl}",
                     $"Thumbnail URL: {apiAvatar.thumbnailImageUrl}",
